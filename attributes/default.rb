@@ -32,6 +32,10 @@ end
 # 4.0, 4.5, 4.5.1, 4.5.2, 4.6, 4.6.1
 default['dotnetframework']['version'] = '4.5.2'
 
+# Override to install different DNX versions
+# "1.0.0-rc1-update1" 
+default['dotnetframework']['dnx-version'] = '1.0.0-rc1-update1'
+
 # .NET 4.0
 default['dotnetframework']['4.0']['package_name'] = 'Microsoft .NET Framework 4 Extended'
 default['dotnetframework']['4.0']['version'] = '4.0.30319'
@@ -93,3 +97,6 @@ default['dotnetframework']['4.6.1']['checksum'] =
 default['dotnetframework']['4.6.1']['url'] = 'http://download.microsoft.com/download/E/4/1/' \
                                            'E4173890-A24A-4936-9FC9-AF930FE3FA40/' \
                                            'NDP461-KB3102436-x86-x64-AllOS-ENU.exe'
+
+# DNX 1.0.0-rc1-update1
+default['dotnetframework']['dnx']['1.0.0-rc1-update1']['full_name'] = 'dnx-clr-win-x86.1.0.0-rc1-update1'

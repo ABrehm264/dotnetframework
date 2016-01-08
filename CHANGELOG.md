@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of dotnetframework.
 
+## 1.1.1
+- Added recipe to make adding .Net 4.6.1 work without setting the attribute in order to make it cleaner looking imo.
+- Added the ability to install DNVM
+- Added the ability to install DNX-1.0.0.0-rc1-update1
+
 ## 1.1.0
 - Fixed .NET framework idempotence to avoid constant reboots
 - Added dotnetframework_version LWRP

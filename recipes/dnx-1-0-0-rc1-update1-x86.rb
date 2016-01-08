@@ -18,6 +18,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Description: Installs version 1.0.0-rc1-update1  of dnvm
-node.default['dotnetframework']['dnx-version']  = '1.0.0-rc1-update1'
+# Description: Installs version 1.0.0-rc1-update1 of dnvm
+
+node.default['dotnetframework']['dnx-version'] = 'dnx-clr-win-x86.1.0.0-rc1-update1'
 include_recipe 'dotnetframework::dnx'

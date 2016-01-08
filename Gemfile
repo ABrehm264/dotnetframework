@@ -15,3 +15,5 @@ gem 'rake'
 gem 'berkshelf', '~> 4.0'
 gem 'rubocop', '~> 0.28'
 gem 'minitest-chef-handler'
+gem "test-kitchen"
+gem "kitchen-vagrant"

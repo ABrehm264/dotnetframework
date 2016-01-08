@@ -19,41 +19,28 @@
 # limitations under the License.
 #
 # Description: Installs the .Net Version Manager
+install_path = Dotnetframework::DNVM.new().dnvm_cmd_path
 
-# If the recipe is already installed.
-unless ENV['DNX_HOME'].nil? do
-  # Clean up after ourselves.
-  directory 'c:/windows/temp/dnvm' do
-    action :delete
+ruby_block "Create #{install_path}" do
+  block do
+    FileUtils.mkdir_p install_path
   end
-  
-  return # Continue the rest of the run
+  not_if { Dir.exists? install_path }
 end
 
-directory 'c:/windows/temp/dnvm' do
-  action :create
-end
-
-remote_file 'c:/windows/temp/dnvm/dnvm.ps1' do
+remote_file "#{install_path}/dnvm.ps1" do
   source 'https://raw.githubusercontent.com/aspnet/Home/dev/dnvm.ps1'
   action :create
 end
 
-remote_file 'c:/windows/temp/dnvm/dnvm.cmd' do
+remote_file "#{install_path}/dnvm.cmd" do
   source 'https://raw.githubusercontent.com/aspnet/Home/dev/dnvm.cmd'
   action :create
 end
 
-#TODO: Better error handling, but dnvm will iterate a few more times before it settles down, so I expect the errors will too
-ruby_block 'Install DNVM' do
-  block do
-    require 'mixlib/shellout'
-    cmd = Mixlib::ShellOut.new('dnvm.cmd setup', :cwd => 'c:/windows/temp/dnvm')
-    cmd.run_command
-    begin
-      cmd.error!
-    rescue
-      raise 'Error when attempting to install DNVM - ' + cmd.stderr
-    end
-  end
+# Add the install path to the Path environment variable so that it can be accessed globally.
+env "path" do
+  delim ";"
+  value install_path
+  action :modify
 end

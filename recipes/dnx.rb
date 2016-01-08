@@ -18,24 +18,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Description: Installs the specified verison of dnvm
-include_recipe 'dotnetframework::dotnet-dnvm'
+# Description: Installs the specified verison of the .Net execution environment
+include_recipe 'dotnetframework::dotnet-versionmanager'
 
-version   = node['dotnetframework']['dnx-version']
-full_name = node['dotnetframework']['dnx'][version]['full_name']
+full_name                        = node['dotnetframework']['dnx-version']
+version                          = node['dotnetframework']['dnx'][full_name]['version']
+architecture                     = node['dotnetframework']['dnx'][full_name]['architecture']
 
 # Installs the specified framework to the global path for all users
 ruby_block "Install DNX #{version}" do
   block do
+    puts "Attempting to install DNX #{version}"
     require 'mixlib/shellout'
-    cmd = Mixlib::ShellOut.new("dnvm install #{version} -g", :cwd => 'c:/windows/temp')
-    cmd.run_command
-    begin
-      cmd.error!
-    rescue
-      raise 'Error when attempting to install DNVM - ' + cmd.stderr
-    end
+    puts "Running: 'dnvm.cmd install #{version} -g -arch #{architecture}' in '#{ENV['SystemDrive']}/Program Files/dnvm'"
+    #cmd = Mixlib::ShellOut.new("dnvm.cmd install #{version} -g -arch #{architecture}", :cwd => "#{ENV['SystemDrive']}/Program Files/dnvm")
+    #cmd.run_command
+    puts 'Command finished'
+    #if !cmd.stderr.to_s.empty?
+    #  raise "Error when attempting to install dnx framework #{version} - #{cmd.stderr}"
+    #end
   end
-  notifies :request, 'windows_reboot[60]', :immediately
-  not_if ENV['PATH'].include? full_name
+  not_if { Dotnetframework::DNVM.new().is_specific_dnx_version_available?(version, architecture) }
 end

@@ -33,8 +33,8 @@ end
 default['dotnetframework']['version'] = '4.5.2'
 
 # Override to install different DNX versions
-# "1.0.0-rc1-update1" 
-default['dotnetframework']['dnx-version'] = '1.0.0-rc1-update1'
+# 'dnx-clr-win-x86.1.0.0-rc1-update1','dnx-clr-win-x64.1.0.0-rc1-update1'
+default['dotnetframework']['dnx-version'] = 'dnx-clr-win-x86.1.0.0-rc1-update1'
 
 # .NET 4.0
 default['dotnetframework']['4.0']['package_name'] = 'Microsoft .NET Framework 4 Extended'
@@ -99,4 +99,8 @@ default['dotnetframework']['4.6.1']['url'] = 'http://download.microsoft.com/down
                                            'NDP461-KB3102436-x86-x64-AllOS-ENU.exe'
 
 # DNX 1.0.0-rc1-update1
-default['dotnetframework']['dnx']['1.0.0-rc1-update1']['full_name'] = 'dnx-clr-win-x86.1.0.0-rc1-update1'
+default['dotnetframework']['dnx']['dnx-clr-win-x86.1.0.0-rc1-update1']['version'] = '1.0.0-rc1-update1'
+default['dotnetframework']['dnx']['dnx-clr-win-x86.1.0.0-rc1-update1']['architecture'] = 'x86'
+
+default['dotnetframework']['dnx']['dnx-clr-win-x64.1.0.0-rc1-update1']['version'] = '1.0.0-rc1-update1'
+default['dotnetframework']['dnx']['dnx-clr-win-x64.1.0.0-rc1-update1']['architecture'] = 'x64'

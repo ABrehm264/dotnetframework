@@ -99,3 +99,5 @@ Vagrantfile
 ##########
 vagrant.yaml
 .tailor
+
+.kitchen

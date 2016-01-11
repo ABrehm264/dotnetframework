@@ -44,3 +44,10 @@ env "path" do
   value install_path
   action :modify
 end
+
+env 'DNX_HOME' do
+  delim ";"
+  value install_path
+  action :create
+end
+

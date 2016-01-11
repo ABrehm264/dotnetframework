@@ -28,15 +28,13 @@ architecture                     = node['dotnetframework']['dnx'][full_name]['ar
 # Installs the specified framework to the global path for all users
 ruby_block "Install DNX #{version}" do
   block do
-    puts "Attempting to install DNX #{version}"
     require 'mixlib/shellout'
-    puts "Running: 'dnvm.cmd install #{version} -g -arch #{architecture}' in '#{ENV['SystemDrive']}/Program Files/dnvm'"
-    #cmd = Mixlib::ShellOut.new("dnvm.cmd install #{version} -g -arch #{architecture}", :cwd => "#{ENV['SystemDrive']}/Program Files/dnvm")
-    #cmd.run_command
+    cmd_string = "\"#{ENV['SystemDrive']}/Program Files/dnvm/dnvm\" install \"#{version}\" -g -arch \"#{architecture}\""
+    puts "command - #{cmd_string}"
+    cmd = Mixlib::ShellOut.new(cmd_string)
+    cmd.run_command
     puts 'Command finished'
-    #if !cmd.stderr.to_s.empty?
-    #  raise "Error when attempting to install dnx framework #{version} - #{cmd.stderr}"
-    #end
+    raise "Error when attempting to install dnx framework #{version} - #{cmd.stderr}" if !cmd.stderr.to_s.empty?
   end
   not_if { Dotnetframework::DNVM.new().is_specific_dnx_version_available?(version, architecture) }
 end

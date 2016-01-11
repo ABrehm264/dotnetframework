@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 # Description: Installs the .Net Version Manager
-install_path = Dotnetframework::DNVM.new().dnvm_cmd_path
+install_path = Dotnetframework::DNVM::DNVM_CMD_PATH.to_s
 
 ruby_block "Create #{install_path}" do
   block do
@@ -44,10 +44,3 @@ env "path" do
   value install_path
   action :modify
 end
-
-env 'DNX_HOME' do
-  delim ";"
-  value install_path
-  action :create
-end
-

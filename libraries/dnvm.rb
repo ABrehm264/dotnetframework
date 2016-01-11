@@ -1,23 +1,18 @@
 module Dotnetframework
   class DNVM
-    attr_accessor :dnvm_cmd_path 
+    DNVM_CMD_PATH = "#{ENV['SystemDrive']}/Program Files/dnvm/bin" 
   
     require 'chef/mixin/shell_out'
     include Chef::Mixin::ShellOut  
     
-    def initialize()
-      @dnvm_cmd_path = "#{ENV['SystemDrive']}/Program Files/dnvm"
-    end
-    
     def is_specific_dnx_version_available?(version, architecture)
-      puts 'starting function'
-      cmd = "\"#{dnvm_cmd_path}/dnvm\" list -PassThru"
-      puts "running command #{cmd}" 
+      cmd = "\"#{DNVM_CMD_PATH}/dnvm\" list -PassThru"
+      puts "Running command #{cmd}"
       cmd = shell_out(cmd)
       raise cmd.stderr if !cmd.stderr.empty?()
     
+      puts "Parsing output"
       hash = Hash.new
-      puts 'starting parsing'
       ## Output which we're parsing
       # Alias           :
       # Version         : 1.0.0-rc1-update1
@@ -36,17 +31,18 @@ module Dotnetframework
       # Runtime         : clr
       ##
       cmd.stdout.lines.each do |line|
-        match = line.gsub(/\s+/,'').split(':') # word : word?
+        match = line.gsub(/\s+/,'').split(':')
         next if !match.any? # empty line or something, we're skipping.
         
         hash = Hash.new if (match.first == 'Alias') # Starting over.
+        
         hash[match.first] = match.last
         if (hash['Version'] == version && hash['Architecture'] == architecture)
-          puts "version #{version} and architecture #{architecture} found. Returning true"
-          return true
+          puts "found version returning true"
+          return true 
         end
       end
-      puts 'nothing found, returning false'
+      puts "did not find version returning false."
       return false
     end
   end

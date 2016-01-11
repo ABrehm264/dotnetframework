@@ -29,11 +29,10 @@ architecture                     = node['dotnetframework']['dnx'][full_name]['ar
 ruby_block "Install DNX #{version}" do
   block do
     require 'mixlib/shellout'
-    cmd_string = "\"#{ENV['SystemDrive']}/Program Files/dnvm/dnvm\" install \"#{version}\" -g -arch \"#{architecture}\""
-    puts "command - #{cmd_string}"
-    cmd = Mixlib::ShellOut.new(cmd_string)
+    puts "attempting to install stuffz"
+    cmd = Mixlib::ShellOut.new("\"#{Dotnetframework::DNVM::DNVM_CMD_PATH}/dnvm.ps1\" install \"#{version}\" -arch \"#{architecture}\"", :cwd => "#{ENV['SystemDrive']}")
+    puts "running command #{cmd}"
     cmd.run_command
-    puts 'Command finished'
     raise "Error when attempting to install dnx framework #{version} - #{cmd.stderr}" if !cmd.stderr.to_s.empty?
   end
   not_if { Dotnetframework::DNVM.new().is_specific_dnx_version_available?(version, architecture) }

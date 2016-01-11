@@ -28,7 +28,7 @@ platforms:
         natdnsproxy1: "on"
 
 suites:
-  - name: dnx_1_0_0_rc1_update1
+  - name: dnx_1_0_0_rc1_update1_x86
     run_list:
-      - recipe[dotnetframework::dnx-1-0-0-rc1-update1-x64]
+      - recipe[dotnetframework::dnx-1-0-0-rc1-update1-x86]
     attributes:

@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 # Description: Installs the .Net Version Manager
-install_path = Dotnetframework::DNVM::DNVM_CMD_PATH.to_s
+install_path = Dotnetframework::DNVM::DNVM_CMD_PATH
 
 ruby_block "Create #{install_path}" do
   block do
@@ -39,8 +39,15 @@ remote_file "#{install_path}/dnvm.cmd" do
 end
 
 # Add the install path to the Path environment variable so that it can be accessed globally.
+install_path_recreate = install_path + '' # Recreating the string since it seems that this operation changes the passed in string.
 env "path" do
   delim ";"
-  value install_path
+  value install_path_recreate
   action :modify
+end
+
+env "DNX_HOME" do
+  delim ";"
+  value "C:\\ProgramData\\Microsoft DNX\\"
+  action :create
 end

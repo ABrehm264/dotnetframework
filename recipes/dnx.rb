@@ -30,7 +30,7 @@ ruby_block "Install DNX #{version}" do
   block do
     require 'mixlib/shellout'
     puts "attempting to install stuffz"
-    cmd = Mixlib::ShellOut.new("\"#{Dotnetframework::DNVM::DNVM_CMD_PATH}/dnvm.cmd\" install \"#{version}\" -arch \"#{architecture}\"", :cwd => "#{ENV['SystemDrive']}")
+    cmd = Mixlib::ShellOut.new("\"#{Dotnetframework::DNVM::DNVM_CMD_PATH}/dnvm.cmd\" install \"#{version}\" -arch \"#{architecture}\" -g", :cwd => "#{ENV['SystemDrive']}")
     puts "running command #{cmd.command}"
     cmd.run_command
     raise "Error when attempting to install dnx framework #{version} - #{cmd.stderr}" if !cmd.stderr.to_s.empty?

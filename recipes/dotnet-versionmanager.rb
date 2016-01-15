@@ -45,9 +45,3 @@ env "path" do
   value install_path_recreate
   action :modify
 end
-
-env "DNX_HOME" do
-  delim ";"
-  value "C:\\ProgramData\\Microsoft DNX\\"
-  action :create
-end
